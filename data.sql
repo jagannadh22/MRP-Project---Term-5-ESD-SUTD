@@ -1,0 +1,77 @@
+INSERT INTO part_master_records (part_name, description, part_type, unit) VALUES
+('Engine Block', 'The main part of the engine', 'Sub-assembly', 'unit'),
+('Crankshaft', 'A shaft driven by a crank', 'Sub-assembly', 'unit'),
+('Piston', 'A component of the engine', 'Raw Material', 'unit'),
+('Cylinder Head', 'Part of the engine block', 'Sub-assembly', 'unit'),
+('Spark Plug', 'A device for igniting the fuel-air mixture in an engine', 'Raw Material', 'unit'),
+('Alternator', 'A generator that produces electricity', 'Sub-assembly', 'unit'),
+('Radiator', 'A device to cool the engine', 'Sub-assembly', 'unit'),
+('Battery', 'Provides electrical power to the car', 'Raw Material', 'unit'),
+('Transmission', 'A system that transmits power from the engine to the wheels', 'Sub-assembly', 'unit'),
+('Axle', 'A central shaft for rotating wheels', 'Sub-assembly', 'unit'),
+('Brake Pad', 'A component of the braking system', 'Raw Material', 'unit'),
+('Steering Wheel', 'The wheel that the driver uses to steer the car', 'Sub-assembly', 'unit'),
+('Tire', 'A rubber covering for wheels', 'Raw Material', 'unit'),
+('Car Body', 'The main body of the car', 'Final Assembly', 'unit'),
+('Windshield', 'The front window of the car', 'Raw Material', 'unit'),
+('Fuel Tank', 'A container for holding fuel', 'Sub-assembly', 'unit'),
+('Exhaust System', 'A system for expelling waste gases', 'Sub-assembly', 'unit'),
+('Seat', 'A place for the passengers to sit', 'Sub-assembly', 'unit'),
+('Airbag', 'A safety device that inflates upon impact', 'Raw Material', 'unit'),
+('Headlight', 'A light at the front of the car', 'Raw Material', 'unit');
+
+INSERT INTO bills_of_materials (parent_part_id, child_part_id, quantity) VALUES
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Engine Block'), 1),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Engine Block'), (SELECT part_id FROM part_master_records WHERE part_name = 'Crankshaft'), 1),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Engine Block'), (SELECT part_id FROM part_master_records WHERE part_name = 'Piston'), 4),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Engine Block'), (SELECT part_id FROM part_master_records WHERE part_name = 'Cylinder Head'), 1),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Engine Block'), (SELECT part_id FROM part_master_records WHERE part_name = 'Spark Plug'), 4),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Radiator'), 1),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Battery'), 1),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Transmission'), 1),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Axle'), 2),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Brake Pad'), 4),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Steering Wheel'), 1),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Tire'), 4),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Windshield'), 1),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Fuel Tank'), 1),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Exhaust System'), 1),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Seat'), 5),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Airbag'), 6),
+((SELECT part_id FROM part_master_records WHERE part_name = 'Car Body'), (SELECT part_id FROM part_master_records WHERE part_name = 'Headlight'), 2);
+
+INSERT INTO workcenters (location) VALUES 
+('Ang Mo Kio'),
+('Changi'),
+('Paya Lebar'),
+('Jurong'),
+('Bishan');
+
+INSERT INTO routing (part_id, workcenter_id, sequence) VALUES 
+(1, 2, 1),
+(2, 4, 2),
+(3, 1, 3),
+(4, 5, 4),
+(5, 3, 5),
+(6, 2, 1),
+(7, 3, 2),
+(8, 4, 3),
+(9, 1, 4),
+(10, 5, 5),
+(11, 1, 1),
+(12, 2, 2),
+(13, 4, 3),
+(14, 3, 4),
+(15, 5, 5),
+(16, 2, 1),
+(17, 3, 2),
+(18, 1, 3),
+(19, 4, 4),
+(20, 5, 5);
+
+INSERT INTO orders (part_id, quantity, order_date) VALUES 
+(1, 100, '2023-08-01'),
+(2, 50, '2023-08-02'),
+(3, 75, '2023-08-03'),
+(4, 20, '2023-08-04'),
+(5, 60, '2023-08-05');
