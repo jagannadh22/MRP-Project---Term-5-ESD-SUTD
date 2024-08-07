@@ -36,3 +36,15 @@ CREATE TABLE workcenters (
     location VARCHAR(100) NOT NULL
 );
 
+BEGIN;
+
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM bills_of_materials WHERE child_part_id = :part_id) THEN
+        RAISE EXCEPTION 'Cannot delete part as it is being used in a BOM.';
+    ELSE
+        DELETE FROM part_records WHERE part_id = :part_id;
+    END IF;
+END $$;
+
+COMMIT;
